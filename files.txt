@@ -1,7 +1,0 @@
-Week 1
-    FIFO     : https://ideone.com/WhR0tJ
-    SJF      : 
-    Priority : 
-    RR       :
-Week2 
-    Bankers  : https://www.ideone.com/iZvQnb
