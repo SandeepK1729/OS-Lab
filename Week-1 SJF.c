@@ -31,8 +31,8 @@ int main() {
     a[0].wt = total_wt = 0; 
     a[0].tat = total_tat = a[0].bt;
     for(int i = 1; i < n; i++) { 
-        a[i].wt = a[i - 1].wt + a[i - 1].bt;    total_wt += a[i].wt;
-        a[i].tat = a[i - 1].tat + a[i].bt;      total_tat += a[i].tat;
+        total_wt += (a[i].wt = (a[i - 1].wt + a[i - 1].bt));
+        total_tat += (a[i].tat = (a[i - 1].tat + a[i].bt));
     } 
     display(a, n); 
     printf("\nAvg waiting time is %f\nAvg tat is %f\n", total_wt * 1.0 / n, total_tat * 1.0 / n); 
