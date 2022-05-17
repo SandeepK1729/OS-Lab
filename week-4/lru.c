@@ -23,6 +23,7 @@ int main() {
     int frames[f], usage[n], beg = 0, current = 0;
 
     printf("Page");
+    
     for(int i = 0; i < f; i++) { printf("\tf%d", i + 1); frames[i] = -1; }
 
     for(int i = 0; i < n; i++)  usage[i] = 0;

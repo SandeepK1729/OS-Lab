@@ -1,14 +1,13 @@
 #include<stdio.h>
 
 typedef struct { int n, size, block_index; } file;
-typedef struct { int n, size, is_occupied; } block;
+typedef struct { int size, is_occupied; } block;
 
 int main() {
     int b; printf("Enter no of blocks : ");  scanf("%d", &b);
     block blocks[b];
     printf("Enter block sizes of %d blocks : ", b); 
     for(int i = 0; i < b; i++) { 
-        blocks[i].n = i + 1; 
         scanf("%d", &blocks[i].size); 
         blocks[i].is_occupied = 0;
     } 
@@ -20,9 +19,9 @@ int main() {
 
     printf("File no\tFile size\tBlock no\tBlock size\tFragment\n");
     for(int i = 0; i < f; i++) {
-        int idx = -1, j = -1;
+        int idx = -1, j = b;
         
-        while(j++ < b && idx == -1) 
+        while(j-- > -1 && idx == -1) 
             if(!blocks[j].is_occupied && files[i].size <= blocks[j].size) idx = j;
         
         files[i].block_index = idx;
