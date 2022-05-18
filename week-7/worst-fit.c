@@ -17,7 +17,7 @@ int main() {
     printf("Enter file sizes of %d files : ", f);
     for(int i = 0; i < f; i++) { files[i].n = i + 1; scanf("%d", &files[i].size); }
 
-    printf("File no\tFile size\tBlock no\tBlock size\tFragment\n");
+    printf("\nFile no\tFile size\tBlock no\tBlock size\tFragment\n");
     for(int i = 0; i < f; i++) {
         int idx = -1, j = b;
         
@@ -27,8 +27,8 @@ int main() {
         files[i].block_index = idx;
         blocks[idx].is_occupied = 1;
 
-        printf("%d\t\t%d\t\t%d\t\t", files[i].n, files[i].size, idx + 1);
-        if(idx == -1)   printf("-\t-\n");
-        else            printf("%d\t\t%d\n", blocks[idx].size, blocks[idx].size - files[i].size);
+        printf("%d\t\t%d\t\t\t%d\t\t\t", files[i].n, files[i].size, idx + 1);
+        if(idx == -1)   printf("-\t\t-\n");
+        else            printf("%d\t\t\t%d\n", blocks[idx].size, blocks[idx].size - files[i].size);
     }
 }
