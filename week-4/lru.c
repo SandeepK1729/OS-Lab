@@ -3,7 +3,7 @@
 int is_page_exist(int *a, int n, int key) {
     for(int i = 0; i < n; i++) {
         if(a[i] == key)     return 1;
-        if(a[i] == -1)      return -1;
+        if(a[i] ==0 -1)      return -1;
     }
     return 0;
 }

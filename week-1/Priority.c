@@ -17,10 +17,6 @@ int by_prio(process *a, process *b) {
     if( a->p == b -> p) return ( a -> bt > b -> bt); 
     return ( a -> p > b -> p ); 
 }
-// sorted with name 
-int by_process( process *a, process *b ) { 
-    return ( a -> n > b -> n ); 
-}
 // swap 
 void swap(process *a ,process *b) { 
     process *tmp; 
@@ -45,35 +41,19 @@ void display(process *a, int n) {
 // main 
 int main() { 
     int n; printf("Enter no of processes : "); scanf("%d", &n); 
-    process *a = (process*) calloc ( n, sizeof(process) ); 
+    process a[n];
     // taking input
     
     printf("Enter priorities and burst times of process \n");
-    for(int i = 0; i < n; i++) {  
-        scanf("%d %d", &(a + i) -> p, &(a + i) -> bt); 
-        (a + i) -> n = i + 1;
-    } 
+    for(int i = 0; i < n; i++) {  scanf("%d %d", &a[i].p, &a[i].bt); a[i].n = i + 1;  } 
     
     sort(a, n, by_prio);
-    int total_wt, total_tat;
-
-    total_wt = a -> wt = 0;
-    total_tat = a -> tat = a -> bt; 
-    /*
-    ct  = tat + at
-    wt = tat - by 
-    n   p   bt  ct  tat wt
-    1   1   2   2   2   0  
-    2   4   3   5   5   2
-    3   5   1   6   6   5
-    4   6   4   10  10  6
-    5 3 10 1 1 4 2 5 1 2 5
-    */
-    for(int i = 1; i < n; i++) {
-        total_tat += ((a + i) -> tat = ((a + i - 1) -> tat + (a + i) -> bt)); 
-        total_wt += ((a + i) -> wt = ((a + i - 1) -> wt + (a + i - 1) -> bt)); 
-    } 
     
+    int total_wt = 0, total_tat = 0, wt = 0;
+    for(int i = 0; i < n; wt += a[i].bt, i++) { 
+        a[i].wt  = wt;                  total_wt  += a[i].wt;
+        a[i].tat = a[i].wt + a[i].bt;   total_tat += a[i].tat; 
+    } 
     display( a, n); 
     
     printf("\nAvg waiting time is %f\nAvg tat is %f\n", total_wt * 1.0 / n, total_tat * 1.0 / n);
