@@ -1,51 +1,52 @@
-#include<stdio.h>
+#include<stdio.h> 
 
-int is_page_exist(int *a, int n, int key) {
-    for(int i = 0; i < n; i++) {
-        if(a[i] == key)     return 1;
-        if(a[i] ==0 -1)      return -1;
-    }
+int find_replace_index( int *a, int f, int *usage) { 
+    int m, u = 1e9;
+    for(int i = 0; i < f; i++) { 
+        int v = a[i];
+        
+        if(v == -1)  return i;
+        if(usage[v] < u) { u = usage[v]; m = i; } 
+    } 
+    return m; 
+} 
+
+int is_exist(int *a, int n, int t) { 
+    for(int i = 0; i < n; i++) 
+        if(a[i] == t)   return 1; 
     return 0;
 }
-int least_used_page(int *a, int n) {
-    int min_page = a[0], idx = 0;
-    for(int i = 1; i < n; i++) {
-        if(a[i] < min_page) {
-            idx = i;    min_page = a[i];
-        }
-    }
-    return idx;
-}
-int main() {
-    int n;          printf("Enter the length of string : ");    scanf("%d", &n);
-    char s[n + 1];  printf("Enter the page string : ");         scanf("%s", s);
-    int f;          printf("Enter the no. of frames : ");       scanf("%d", &f);
-    int frames[f], usage[n], beg = 0, current = 0;
 
-    printf("Page");
+int main() { 
+    int h = 0, m = 0, usage[100] = { 0 };
+    int p; printf("Enter the no of pages : "); scanf("%d", &p); 
+    int pages[p];
     
-    for(int i = 0; i < f; i++) { printf("\tf%d", i + 1); frames[i] = -1; }
-
-    for(int i = 0; i < n; i++)  usage[i] = 0;
-    for(int i = 0; i < n; i++) {
-        int p = s[i] - '0', decision = is_page_exist(frames, f, p);
-
-        if(decision == -1) {
-            frames[beg++] = p;
-        }
-        else if(!decision) {
-            current = least_used_page(usage, n);
-            frames[current] = p;
-            usage[current] = 1;
-        }
-        else {
-            usage[i]++;
-        }
-
-        printf("\n%d", p);
-        for(int j = 0; j < f; j++)  printf("\t%d", frames[j]);
-    }
-    printf("\n");
-    return 0;
-
+    printf("Enter the pages : "); 
+    for(int i = 0; i < p; i++)  scanf("%d", pages + i); 
+    
+    int f; printf("Enter the no of frames : "); scanf("%d", &f); 
+    int frames[f]; 
+    
+    printf("Page"); 
+    for(int i = 0; i < f; i++) { frames[i] = -1; printf("\tf%d", i + 1); }
+    
+    for(int i = 0; i < p; i++) { 
+        int c = pages[i]; // current page 
+        
+        if(is_exist(frames, f, c))  h++; // if already exists 
+        else { 
+            int idx = find_replace_index(frames, f, usage); 
+            frames[idx] = c;    // replace the new page
+            m++;                // miss = miss + 1 i.e, page faults 
+        } 
+        
+        usage[c] = i;       // updates last usage with index
+        
+        printf("\n%d", c); 
+        for(int i = 0; i < f; i++)  printf("\t%d", frames[i]);
+    } 
+    
+    printf("\nno of hits : %d \nno of misses / faults : %d", h, m); 
+    return 0; 
 }
