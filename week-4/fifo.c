@@ -1,37 +1,38 @@
-#include<stdio.h>
+#include<stdio.h> 
 
-int is_page_exist(int *a, int n, int key) {
-    for(int i = 0; i < n; i++) {
-        if(a[i] == key)     return 1;
-        if(a[i] == -1)      return -1;
-    }
+int is_exist(int *a, int n, int t) { 
+    for(int i = 0; i < n; i++) 
+        if(a[i] == t)   return 1; 
     return 0;
 }
-int main() {
-    int n;          printf("Enter the length of string : ");    scanf("%d", &n);
-    char s[n + 1];  printf("Enter the page string : ");         scanf("%s", s);
-    int f;          printf("Enter the no. of frames : ");          scanf("%d", &f);
-    int frames[f], beg = 0, current = 0;
 
-    printf("Page");
-    for(int i = 0; i < f; i++) { printf("\tf%d", i + 1); frames[i] = -1; }
-
-    for(int i = 0; i < n; i++) {
-        int p = s[i] - '0', decision = is_page_exist(frames, f, p);
-
-        if(!decision) {
-            frames[beg] = p;
-            beg = (beg + 1) % f;
-        }
-        if(decision == -1) {
-            frames[current] = p;
-            current = (current + 1) % f;
-        }
-
-        printf("\n%d", p);
-        for(int j = 0; j < f; j++)  printf("\t%d", frames[j]);
-    }
-    printf("\n");
-    return 0;
-
+int main() { 
+    int h = 0, m = 0, replace_idx = 0;
+    int p; printf("Enter the no of pages : "); scanf("%d", &p); 
+    int pages[p];
+    
+    printf("Enter the pages : "); 
+    for(int i = 0; i < p; i++)  scanf("%d", pages + i); 
+    
+    int f; printf("Enter the no of frames : "); scanf("%d", &f); 
+    int frames[f]; 
+    
+    printf("Page"); 
+    for(int i = 0; i < f; i++) { frames[i] = -1; printf("\tf%d", i + 1); }
+    
+    for(int i = 0; i < p; i++) { 
+        int c = pages[i]; // current page 
+        
+        if(is_exist(frames, f, c))  h++; // if already exists 
+        else { 
+            frames[replace_idx] = c; 
+            m++; replace_idx = (replace_idx + 1) % f;
+        } 
+        
+        printf("\n%d", c); 
+        for(int i = 0; i < f; i++)  printf("\t%d", frames[i]);
+    } 
+    
+    printf("\nno of hits : %d \nno of misses / faults : %d", h, m); 
+    return 0; 
 }
