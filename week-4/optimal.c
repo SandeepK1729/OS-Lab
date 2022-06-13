@@ -18,12 +18,12 @@ int is_exist(int *a, int n, int t) {
 }
 
 int main() { 
-    int h = 0, m = 0, usage[f] = { 0 };
+    int h = 0, m = 0, usage[100] = { 0 };
     int p; printf("Enter the no of pages : "); scanf("%d", &p); 
     int pages[p];
     
     printf("Enter the pages : "); 
-    for(int i = 0; i < p; i++)  scanf("%d", pages + i); 
+    for(int i = 0; i < p; i++)  { scanf("%d", pages + i); usage[pages[i]]++; }
     
     int f; printf("Enter the no of frames : "); scanf("%d", &f); 
     int frames[f]; 
@@ -41,7 +41,7 @@ int main() {
             m++;                // miss = miss + 1 i.e, page faults 
         } 
         
-        usage[c] = i;       // updates last usage with index
+        usage[c]--;       // updates last usage with index
         
         printf("\n%d", c); 
         for(int i = 0; i < f; i++)  printf("\t%d", frames[i]);
