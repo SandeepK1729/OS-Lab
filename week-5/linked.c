@@ -2,10 +2,17 @@
 #include<string.h>
 #include<stdlib.h>
 
+typedef struct block {
+    int data;
+    struct block *next;
+} Block;
+
 typedef struct file {
     char name[20];
-    int sb, n, *blocks;
+    int sb, n;
+    Block *b;
 } File;
+
 
 int main() { 
     int n; printf("Enter no of files : "); scanf("%d", &n);
@@ -16,9 +23,14 @@ int main() {
         printf("\nEnter name of file %d : ", i + 1);                scanf("%s", files[i].name);
         printf("\nEnter starting block of file %d : ", i + 1);      scanf("%d", &files[i].sb);
         printf("\nEnter no of blocks of file %d : ", i + 1);        scanf("%d", &files[i].n);
+
         printf("\nEnter block values of %d blocks : ", files[i].n);
-        files[i].blocks = (int *) calloc(files[i].n, sizeof(int));
-        for(int j = 0; j < files[i].n; j++)                         scanf("%d", &files[i].blocks[j]);
+        files[i].b = (Block *) malloc(sizeof(Block));  
+        Block *tmp = files[i].b;                                    scanf("%d", &tmp -> data);
+        for(int j = 1; j < files[i].n; j++)   {
+            tmp -> next = (Block *) malloc(sizeof(Block));      
+            tmp = tmp -> next;                                      scanf("%d", &tmp -> data);
+        }
     }
     char s[20];    printf("\n\nEnter file name to search : ");      scanf("%s", s);
     int i = 0;
@@ -27,7 +39,7 @@ int main() {
     else { 
         printf("\nfile name\tstarting block\tno of blocks\tvalues\n");
         printf("%s\t\t%d\t\t%d\t\t", files[i].name, files[i].sb, files[i].n);
-        for(int j = 0; j < files[i].n; j++) printf("%d, ", files[i].blocks[j]);
+        for(Block *tmp = files[i].b; tmp ; tmp = tmp -> next)       printf("%d, ", tmp -> data);
     }
     return 0;
 }

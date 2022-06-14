@@ -26,5 +26,5 @@ int main() {
 	if(process_no > p)					printf("Invalid Process"); 
 	else if(page_no > sizeof(process[process_no]) / sizeof(int)) printf("Invalid page"); 
 	else if(offset > page_size)			printf("Invalid Offset");
-	else 								printf("physical address is %d", process[process_no][page_no] + offset);
+	else 								printf("physical address is %d", process[process_no][page_no] * page_size + offset);
 }

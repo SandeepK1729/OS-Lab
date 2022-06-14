@@ -18,7 +18,7 @@ int is_exist(int *a, int n, int t) {
 }
 
 int main() { 
-    int h = 0, m = 0, usage[f] = { 0 };
+    int h = 0, m = 0, usage[20] = { 0 };
     int p; printf("Enter the no of pages : "); scanf("%d", &p); 
     int pages[p];
     
